@@ -1,1 +1,89 @@
 
+# Python
+
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+
+.venv/
+venv/
+env/
+ENV/
+
+
+# IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+# Environment / Secrets
+
+.env
+.env.*
+!.env.example
+
+
+# Datasets
+
+data/raw/
+data/private/
+data/*.csv
+data/*.parquet
+data/*.json
+
+# Keep folder structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+
+# ML Models / Large Files
+
+models/*.pth
+models/*.pt
+models/*.onnx
+models/*.joblib
+models/*.pkl
+models/*.h5
+models/*.keras
+
+
+# Training Checkpoints
+
+checkpoints/
+runs/
+wandb/
+tensorboard/
+
+
+# Logs
+
+logs/
+*.log
+
+# Generated Results
+
+results/generated/
+results/tmp/
+
+
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+
+# Build / Cache
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
