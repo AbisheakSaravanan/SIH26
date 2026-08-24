@@ -1,2 +1,13 @@
 # SIH26
-The indie repo for SIH INTERNAL HACK 26
+
+The Individual repo for SIH Internal Hackathon 2026
+
+Created on 23rd August, Abisheak Saravanan.
+
+# Wi-Fi Object Sensing
+
+This project explores the possibility of using Wi-Fi signals to detect and understand the presence, movement, and basic structure of objects.
+
+The goal is to investigate whether Wi-Fi can be used for sensing in a way similar to sonar or radar, with potential applications in object detection, indoor monitoring, and wireless environmental awareness.
+
+This project is currently in the early exploration and development stage.
