@@ -26,7 +26,7 @@ def export_to_onnx():
         (dummy_input,),
         onnx_file_path,
         export_params=True,        # store the trained parameter weights inside the model file
-        opset_version=12,          # the ONNX version to export the model to
+        opset_version=18,          # the ONNX version to export the model to
         do_constant_folding=True,  # whether to execute constant folding for optimization
         input_names=['input'],     # the model's input names
         output_names=['output'],   # the model's output names
@@ -35,6 +35,21 @@ def export_to_onnx():
             'output': {0: 'batch_size'}
         }
     )
+    
+    # Consolidate external weights into the .onnx file itself
+    import onnx
+    from onnx.external_data_helper import convert_model_from_external_data
+    import os
+
+    loaded_model = onnx.load(onnx_file_path)
+    convert_model_from_external_data(loaded_model)
+    onnx.save_model(loaded_model, onnx_file_path)
+    
+    # Clean up the external data file
+    data_file = onnx_file_path + ".data"
+    if os.path.exists(data_file):
+        os.remove(data_file)
+        
     print(f"Model successfully exported to ONNX format at '{onnx_file_path}'!")
 
 if __name__ == '__main__':

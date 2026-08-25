@@ -52,7 +52,7 @@ The output tensor index maps to the following activities:
 
 ## 4. Model Architecture & Layer Flow
 
-The network is a 2D Convolutional Neural Network that uses an Adaptive Pooling layer to compress variable input sizes into a fixed feature representation.
+The network is a hybrid Convolutional Neural Network and Long Short-Term Memory (CNN-LSTM) model that uses a 2D Conv frontend for spatial-spectral feature extraction and a recurrent LSTM backend for sequential modeling of packets over time.
 
 ```mermaid
 graph TD
@@ -64,12 +64,13 @@ graph TD
     Conv2 --> BN2["BatchNorm2D (32)"]
     BN2 --> ReLU2["ReLU"]
     
-    ReLU2 --> Pool["AdaptiveAvgPool2D (Compresses to 4x8)"]
-    Pool --> Flatten["Flatten (Output: 1024 features)"]
-    
-    Flatten --> FC1["Linear (1024 -> 32)"]
+    ReLU2 --> Reshape1["Reshape & Permute: [batch_size * packets, 32, subcarriers]"]
+    Reshape1 --> Pool["AdaptiveAvgPool1D (Pool subcarriers to 8)"]
+    Pool --> Reshape2["Reshape for LSTM: [batch_size, packets, 256]"]
+    Reshape2 --> LSTM["LSTM (Input: 256, Hidden: 64, Layers: 1)"]
+    LSTM --> FinalState["Final Hidden State: h_n[-1]"]
+    FinalState --> FC1["Linear (64 -> 32)"]
     FC1 --> ReLU3["ReLU"]
-    
     ReLU3 --> FC2["Linear (32 -> 5 classes)"]
     FC2 --> Output["Output Logits: [batch_size, 5]"]
 ```
